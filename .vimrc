@@ -25,6 +25,18 @@ let g:ale_lint_on_save = 1
 
 au FileType asm let b:ale_linters = ['avr_as']
 
+au FileType c,cpp let b:ale_linters = ['gcc', 'clang']
+let g:ale_c_gcc_executable = 'gcc'
+let g:ale_c_clang_executable = 'clang'
+
+let g:ale_fixers = {
+\   'c': ['clang-format'],
+\}
+
+let g:ale_fix_on_save = 1
+
+autocmd FileType c,cpp setlocal tabstop=4 shiftwidth=4 expandtab
+
 call plug#begin('~/.vim/plugged')
 Plug 'Shirk/vim-gas'
 Plug 'tpope/vim-dispatch'
@@ -34,6 +46,20 @@ Plug 'vhda/verilog_systemverilog.vim', {'for': 'nasm'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdtree'
 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'joshdick/onedark.vim'
+
 call plug#end()
 
+colorscheme onedark
+
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ coc#refresh()
+
+inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Use <CR> to confirm completion or insert newline
+inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<CR>"
 
